@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underworld Crusaders | Discord</title>
+<meta name="description" content="Влез в Discord сървъра на Underworld Crusaders. / Join the Underworld Crusaders Discord server.">
+<meta property="og:title" content="Underworld Crusaders | Discord">
+<meta property="og:description" content="Влез в Discord сървъра на Underworld Crusaders. / Join the Underworld Crusaders Discord server.">
+<meta property="og:image" content="https://discord.underworldcrusaders.org/apple-touch-icon.png">
+<meta name="theme-color" content="#141216">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #141216;
+    --panel: #27232b;
+    --line: #443c4d;
+    --text: #d8cab8;
+    --muted: #8a8190;
+    --muted-2: #a79eaf;
+    --accent: #ac82e9;
+    --red: #ff5555;
+    --red-dark: #a83232;
+    --shadow: #0c0b0e;
+  }
+  * { box-sizing: border-box; }
+  html { height: 100%; font-size: clamp(16px, 0.5vw + 9px, 20px); }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background:
+      radial-gradient(90% 50% at 50% 0%, rgba(172,130,233,.22) 0%, transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: "Rubik", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    padding: 1.75rem 1.25rem 3rem;
+    overflow-x: hidden;
+  }
+  main {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 28.75rem;
+    min-height: calc(100vh - 4.75rem);
+    min-height: calc(100dvh - 4.75rem);
+    display: flex; flex-direction: column; justify-content: center;
+    text-align: center;
+  }
+
+  /* Retro grid floor */
+  .floor {
+    position: fixed; left: -50%; right: -50%; bottom: 0; height: 45vh;
+    z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(172,130,233,.45) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(172,130,233,.45) 1px, transparent 1px);
+    background-size: 56px 56px;
+    transform: perspective(380px) rotateX(62deg);
+    transform-origin: 50% 100%;
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+            mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+    opacity: .6;
+    animation: scroll 6s linear infinite;
+  }
+  @keyframes scroll { to { background-position: 0 56px, 0 0; } }
+
+  /* Floating pixels */
+  .p {
+    position: fixed; bottom: -12px; border-radius: 1px; opacity: 0;
+    pointer-events: none; z-index: 0;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: .8; }
+    90%  { opacity: .8; }
+    100% { transform: translateY(-110vh) rotate(180deg); opacity: 0; }
+  }
+
+  /* Language switch */
+  .lang {
+    align-self: center;
+    display: inline-flex;
+    margin: 0 0 1.9rem;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel);
+  }
+  .lang button {
+    font: inherit; font-size: .85rem; font-weight: 600;
+    min-width: 3.25rem; padding: .4rem .9rem;
+    border: 0; border-radius: 999px;
+    background: transparent; color: var(--muted-2);
+    cursor: pointer;
+    transition: background-color .2s, color .2s;
+  }
+  .lang button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+  .lang button:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+
+  /* Title: letters drop in */
+  h1 {
+    font-family: "Pirata One", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3.4rem, 16vw, 4.8rem);
+    line-height: 1;
+    margin: 0 0 .8rem;
+    color: var(--text);
+    text-shadow: 0 .06em 0 #4a3578, 0 0 30px rgba(172,130,233,.5);
+  }
+  h1 .w { display: block; white-space: nowrap; }
+  h1 .l {
+    display: inline-block;
+    animation:
+      drop .6s cubic-bezier(.2,1.4,.4,1) backwards,
+      wave 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 35ms), calc(1.4s + var(--i) * 140ms);
+  }
+  @keyframes drop { from { transform: translateY(-60px) scale(.6); opacity: 0; } }
+  @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .tagline { margin: 0 0 2.1rem; color: var(--muted-2); font-size: 1.05rem; min-height: 1.6em; }
+
+  /* Discord card */
+  .link {
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    padding: 1.25rem 1.25rem 1.25rem 1rem;
+    margin-bottom: 1.6rem;
+    border: 2px solid var(--red);
+    border-radius: .75rem;
+    background: linear-gradient(135deg, #3c2f5c, var(--panel));
+    box-shadow: 0 6px 0 var(--red-dark);
+    color: var(--text);
+    text-decoration: none;
+    text-align: left;
+    overflow: hidden;
+    animation: rise .5s ease-out .3s backwards;
+    transition: transform .15s, border-color .15s, box-shadow .15s;
+  }
+  @keyframes rise { from { transform: translateY(24px); opacity: 0; } }
+  .link:hover { transform: translateY(-3px); border-color: #ff8a8a; box-shadow: 0 9px 0 var(--red-dark); }
+  .link:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--red-dark); }
+  .link:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .slot {
+    flex: none; width: 4rem; height: 4rem;
+    display: grid; place-items: center;
+    border: 2px solid var(--red); border-radius: .65rem;
+    background: var(--bg); color: var(--red);
+    transition: transform .2s;
+  }
+  .slot svg { width: 2.25rem; height: 2.25rem; display: block; }
+  .link:hover .slot { transform: rotate(-6deg) scale(1.08); }
+  .text { display: flex; flex-direction: column; min-width: 0; }
+  .name {
+    font-family: "Pirata One", Georgia, serif;
+    font-weight: 400; font-size: 1.9rem; line-height: 1.1; color: var(--red);
+  }
+  .sub { color: var(--text); font-size: .9rem; }
+  .link::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0; width: 60px; left: -100px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4.5s ease-in-out .9s infinite;
+  }
+  @keyframes shine { 0% { left: -100px; } 35%, 100% { left: calc(100% + 100px); } }
+
+  .btn {
+    display: inline-block;
+    font: inherit; font-weight: 600;
+    padding: .7rem 1.4rem;
+    border: 2px solid var(--line);
+    border-radius: .65rem;
+    background: transparent; color: var(--text);
+    text-decoration: none;
+    transition: transform .15s, border-color .15s;
+  }
+  .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+  footer { margin-top: 2.1rem; color: var(--muted-2); font-size: .85rem; }
+
+  @media (min-width: 900px) {
+    body { padding: 2rem 2.5rem; }
+    main { max-width: 34rem; min-height: calc(100vh - 4rem); min-height: calc(100dvh - 4rem); }
+    .lang { position: fixed; top: 1.25rem; right: 1.5rem; margin: 0; z-index: 2; }
+    h1 { font-size: clamp(3.6rem, min(7vw, 13vh), 6rem); }
+    .tagline { font-size: 1.25rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .p { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="floor" aria-hidden="true"></div>
+
+<main>
+  <div class="lang" role="group" aria-label="Language / Език">
+    <button type="button" data-lang="bg" aria-pressed="true">БГ</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <h1 id="title" aria-label="Underworld Crusaders">Underworld Crusaders</h1>
+  <p class="tagline" id="tagline" aria-live="polite"></p>
+
+  <!-- The Discord invite link lives here, in the href below (the only place to change it) -->
+  <a class="link" id="go" href="https://discord.com/invite/SdQS9YZ">
+    <span class="slot" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M6.2 5.2C8 4.4 10 4 12 4s4 .4 5.8 1.2c1.6 2.3 2.7 5.5 3.1 9.6-1.5 1.3-3.2 2.2-5 2.7l-1-1.7c.5-.2 1-.4 1.4-.7l-.3-.3c-2.700 1.200-5.400 1.200-8.100 0l-.3.300c.4.300.9.500 1.400.700l-1 1.700c-1.800-.5-3.500-1.400-5-2.700.4-4.100 1.500-7.300 3.100-9.600ZM9.200 10.200a1.700 1.900 0 1 0 0 3.800 1.700 1.900 0 0 0 0-3.800Zm5.600 0a1.700 1.900 0 1 0 0 3.800 1.700 1.900 0 0 0 0-3.800Z"/></svg>
+    </span>
+    <span class="text">
+      <span class="name">Underworld Crusaders</span>
+      <span class="sub" data-i18n="join">Влез в моя Discord сървър</span>
+    </span>
+  </a>
+
+  <div><a class="btn" href="https://links.underworldcrusaders.org" data-i18n="back">Всички линкове</a></div>
+
+  <footer>&copy; 2026 Underworld Crusaders / Kraziman</footer>
+</main>
+
+<script>
+  var STRINGS = {
+    bg: {
+      title: "Underworld Crusaders | Discord",
+      opening: "Отваряме Discord…",
+      failed: "Не се отвори? Натисни бутона.",
+      join: "Влез в моя Discord сървър",
+      back: "Всички линкове"
+    },
+    en: {
+      title: "Underworld Crusaders | Discord",
+      opening: "Opening Discord…",
+      failed: "Didn't open? Press the button.",
+      join: "Join my Discord server",
+      back: "All my links"
+    }
+  };
+
+  var currentLang = "bg";
+  var state = "opening";   // "opening" or "failed"
+  var go = document.getElementById("go");
+  var tagline = document.getElementById("tagline");
+
+  function setLang(lang) {
+    var dict = STRINGS[lang] || STRINGS.bg;
+    currentLang = STRINGS[lang] ? lang : "bg";
+    document.documentElement.lang = currentLang;
+    document.title = dict.title;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      el.textContent = dict[el.getAttribute("data-i18n")];
+    });
+    tagline.textContent = dict[state === "failed" ? "failed" : "opening"];
+    document.querySelectorAll(".lang button").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === currentLang ? "true" : "false");
+    });
+    try { localStorage.setItem("lang", currentLang); } catch (e) {}
+  }
+
+  document.querySelectorAll(".lang button").forEach(function (btn) {
+    btn.addEventListener("click", function () { setLang(btn.getAttribute("data-lang")); });
+  });
+
+  // Title: one span per letter (screen readers use the aria-label)
+  (function () {
+    var h = document.getElementById("title");
+    var i = 0;
+    h.textContent = "";
+    "Underworld Crusaders".split(" ").forEach(function (word) {
+      var w = document.createElement("span");
+      w.className = "w";
+      word.split("").forEach(function (ch) {
+        var s = document.createElement("span");
+        s.className = "l";
+        s.style.setProperty("--i", i++);
+        s.setAttribute("aria-hidden", "true");
+        s.textContent = ch;
+        w.appendChild(s);
+      });
+      h.appendChild(w);
+    });
+  })();
+
+  var saved = "bg";
+  try { saved = localStorage.getItem("lang") || "bg"; } catch (e) {}
+  setLang(saved);
+
+  function showFailed() {
+    state = "failed";
+    setLang(currentLang);
+  }
+
+  // Smart redirect:
+  // - normal visit: short splash, then go to Discord
+  // - came back with the Back button: stay here and show the button instead of bouncing again
+  // - redirect didn't work (some in-app browsers): after a few seconds, ask to press the button
+  var target = go.href;
+  var cameBack = false;
+  try {
+    if (sessionStorage.getItem("dc-went")) { cameBack = true; sessionStorage.removeItem("dc-went"); }
+  } catch (e) {}
+
+  var redirectTimer = null;
+  if (cameBack) {
+    showFailed();
+  } else {
+    redirectTimer = setTimeout(function () {
+      try { sessionStorage.setItem("dc-went", "1"); } catch (e) {}
+      window.location.replace(target);
+    }, 1600);
+    setTimeout(showFailed, 5000);
+  }
+
+  // Back-forward cache: the page can come back from memory without reloading
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) {
+      clearTimeout(redirectTimer);
+      try { sessionStorage.removeItem("dc-went"); } catch (err) {}
+      showFailed();
+    }
+  });
+
+  // Clicking the card goes straight away
+  go.addEventListener("click", function () { clearTimeout(redirectTimer); });
+
+  // Floating pixels in the background
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var colors = ["#ac82e9", "#ff5555", "#d8cab8"];
+    for (var k = 0; k < 22; k++) {
+      var d = document.createElement("div");
+      var size = 3 + Math.random() * 4;
+      d.className = "p";
+      d.style.left = Math.random() * 100 + "vw";
+      d.style.width = d.style.height = size + "px";
+      d.style.background = colors[k % colors.length];
+      d.style.animationDuration = 9 + Math.random() * 10 + "s";
+      d.style.animationDelay = -Math.random() * 18 + "s";
+      document.body.appendChild(d);
+    }
+  }
+</script>
+</body>
+</html>
